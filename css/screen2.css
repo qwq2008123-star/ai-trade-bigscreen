@@ -1,0 +1,301 @@
+/* ============ 第二屏：福建省 3D 地图大屏 ============ */
+
+#stage.stage-map {
+  background:
+    radial-gradient(1500px 1000px at 38% 62%, rgba(38, 68, 112, .38) 0%, rgba(10, 20, 38, .55) 48%, rgba(4, 8, 16, .95) 100%),
+    linear-gradient(180deg, #0a1220 0%, #050a14 100%);
+}
+.stage-map .bg-grid-map {
+  background-image:
+    linear-gradient(rgba(80, 130, 200, .04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(80, 130, 200, .04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(1100px 800px at 40% 60%, #000 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(1100px 800px at 40% 60%, #000 20%, transparent 75%);
+}
+
+/* ---- 地图画布 ---- */
+#map-wrap { position: absolute; inset: 0; z-index: 1; }
+#map3d { position: absolute; inset: 0; }
+#map3d canvas { cursor: grab; }
+#map3d.dragging canvas { cursor: grabbing; }
+#map-labels { position: absolute; inset: 0; pointer-events: none; z-index: 5; clip-path: inset(0 583px 0 0); }
+#map-bloom {
+  position: absolute; inset: 0; pointer-events: none; mix-blend-mode: screen;
+  background:
+    radial-gradient(700px 480px at 38% 58%, rgba(80, 150, 250, .06), rgba(0, 0, 0, 0) 70%),
+    radial-gradient(460px 320px at 60% 44%, rgba(130, 190, 250, .04), rgba(0, 0, 0, 0) 72%);
+}
+
+/* 右侧压暗层 */
+.sd-scrim {
+  position: absolute; left: 960px; top: 78px; width: 960px; height: 1002px; z-index: 6;
+  pointer-events: none;
+  background: linear-gradient(90deg,
+    rgba(5, 10, 20, 0) 0%,
+    rgba(5, 10, 20, .34) 22%,
+    rgba(5, 10, 20, .72) 42%,
+    rgba(5, 10, 20, .86) 100%);
+}
+
+/* 标注重叠时把后面那条往下让，让出去的补一条折线指回自己的光柱 */
+.m-leads { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; }
+.m-lead { fill: none; stroke: rgba(158, 202, 255, .62); stroke-width: 1.8; }
+.m-lead.sel { stroke: rgba(255, 215, 106, .72); }
+
+/* 城市光柱标签 */
+.m-label {
+  position: absolute; left: 0; top: 0;
+  display: flex; align-items: center; gap: 0;
+  transform: translate(0, -50%);
+  white-space: nowrap; pointer-events: none;
+  transition: opacity .3s ease;
+}
+.m-label .rank {
+  width: 26px; height: 22px; flex: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800; color: #fff;
+  font-family: "DIN Alternate", "Bahnschrift", Arial, sans-serif;
+  background: linear-gradient(135deg, rgba(72, 128, 210, .95), rgba(28, 56, 108, .9));
+  clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+  box-shadow: 0 0 10px rgba(60, 120, 220, .5);
+}
+.m-label .chip {
+  display: flex; align-items: baseline; gap: 10px;
+  height: 22px; padding: 0 12px 0 10px;
+  background: linear-gradient(90deg, rgba(16, 34, 62, .82), rgba(8, 18, 36, .5));
+  border-bottom: 1px solid rgba(110, 165, 235, .35);
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+}
+.m-label .cn { font-size: 14px; font-weight: 600; color: #cfe0f7; letter-spacing: 1px; }
+.m-label .amt { font-size: 13.5px; color: #9db8dd; font-family: "DIN Alternate", "Bahnschrift", Arial, sans-serif; }
+.m-label.sel .rank { background: linear-gradient(135deg, #ffd76a, #d99a2b); color: #3a2400; box-shadow: 0 0 14px rgba(255, 200, 90, .7); }
+.m-label.sel .chip { background: linear-gradient(90deg, rgba(70, 52, 14, .8), rgba(30, 22, 6, .45)); border-bottom-color: rgba(255, 215, 106, .5); }
+.m-label.sel .cn { color: #fff4d8; }
+.m-label.sel .amt { color: #ffd76a; }
+
+/* 底图上的省份名 */
+.base-label {
+  position: absolute; left: 0; top: 0;
+  transform: translate(-50%, -50%) skewX(-8deg);
+  font-size: 26px; font-weight: 700; letter-spacing: 6px;
+  color: rgba(150, 180, 215, .16);
+  pointer-events: none; white-space: nowrap;
+}
+
+/* ---- 顶部标题栏（本屏尺寸与设计稿一致，覆盖 style.css 的默认值） ---- */
+.stage-map .topbar { padding: 0 46px 0 53px; }
+.stage-map .topbar-left { gap: 12px; padding-top: 9px; }
+.stage-map .main-title { font-size: 36px; letter-spacing: 2px; }
+.stage-map .sub-title { font-size: 14px; letter-spacing: 1px; color: rgba(170, 200, 240, .55); }
+.stage-map .topbar-right { gap: 40px; padding-top: 12px; }
+.stage-map .datetime { font-size: 28px; letter-spacing: 1px; }
+.stage-map .weather { gap: 11px; }
+.stage-map .weather svg { width: 34px; height: 26px; }
+.stage-map .weather em { font-size: 26px; }
+
+/* ---- 左侧核心指标 ---- */
+.sd-kpi {
+  position: absolute; left: 52px; top: 149px; z-index: 8;
+  display: flex; flex-direction: column; gap: 46px;
+}
+.sd-kpi .k-label { font-size: 15px; color: #93b0d6; letter-spacing: 2px; }
+.sd-kpi .k-value { display: flex; align-items: baseline; gap: 8px; margin-top: 2px; }
+.sd-kpi .k-value b {
+  font-size: 34px; font-weight: 800; color: #fff; letter-spacing: 1px;
+  font-family: "DIN Alternate", "Bahnschrift", Impact, Arial, sans-serif;
+  text-shadow: 0 0 16px rgba(120, 180, 255, .5);
+}
+.sd-kpi .k-value span { font-size: 13px; color: #8fa9cc; }
+
+/* ---- 指北针 ---- */
+.compass { position: absolute; left: 58px; top: 934px; z-index: 8; width: 100px; }
+.compass-n {
+  position: relative; z-index: 2;
+  display: block; margin: 0 0 -14px 42px;
+  font-size: 19px; font-weight: 800; color: #eaf4ff; letter-spacing: 1px;
+  font-family: "DIN Alternate", "Bahnschrift", Arial, sans-serif;
+  text-shadow: 0 0 10px rgba(120, 180, 255, .8);
+}
+.compass-dial {
+  width: 100px; height: 100px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 66%, rgba(66, 118, 196, .46), rgba(14, 28, 54, .62) 62%, rgba(8, 16, 32, .34));
+  box-shadow: 0 0 26px rgba(40, 90, 180, .3), inset 0 0 22px rgba(90, 150, 230, .16);
+}
+.compass-dial svg { width: 100%; height: 100%; filter: drop-shadow(0 0 6px rgba(160, 205, 255, .5)); }
+
+/* ---- 地图 tab（竖排） ---- */
+.sd-tabs {
+  position: absolute; left: 1139px; top: 874px; z-index: 9;
+  display: flex; flex-direction: column; gap: 34px;
+}
+.sd-tab {
+  width: 154px; height: 34px; font-size: 17px; letter-spacing: 3px;
+  color: #8fa9cc;
+  background: linear-gradient(180deg, rgba(26, 50, 88, .68), rgba(10, 22, 44, .58));
+  border-bottom: 1px solid rgba(90, 140, 210, .22);
+  clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+}
+.sd-tabs .sd-tab.active {
+  color: #fff; text-shadow: 0 0 10px rgba(180, 220, 255, .9);
+  background: linear-gradient(180deg, rgba(52, 100, 182, .9) 0%, rgba(17, 40, 82, .88) 100%);
+  border-bottom-color: rgba(150, 200, 255, .75);
+  box-shadow: 0 0 24px rgba(60, 130, 240, .38);
+}
+.sd-tab.active::after {
+  content: ""; position: absolute; left: 10px; right: 10px; bottom: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, #9cc4ff, transparent);
+  box-shadow: 0 0 10px #7db4ff;
+}
+
+/* ---- 右侧面板 ---- */
+.sd-right {
+  position: absolute; left: 1333px; top: 0; width: 518px; height: 1080px; z-index: 8;
+}
+.sd-panel { position: absolute; left: 0; width: 100%; }
+.sd-panel::before {
+  content: ""; position: absolute; left: 302px; right: 76px; top: 15px; height: 1px;
+  background: linear-gradient(90deg, rgba(120, 170, 240, .34), rgba(120, 170, 240, 0));
+}
+.sd-right .section-title {
+  width: 300px; height: 26px; line-height: 26px; margin-top: 7px;
+  font-size: 19px; padding-left: 25px; letter-spacing: 4px;
+  background: linear-gradient(90deg,
+    rgba(38, 84, 170, .95) 0%, rgba(24, 52, 104, .82) 84%, rgba(22, 48, 96, 0) 100%);
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 100%, 0 100%);
+}
+.sd-right .section-title i { display: block; width: 11px; height: 11px; left: 5px; }
+
+/* 品类占比 */
+.share-body { display: flex; align-items: flex-start; margin-top: 22px; }
+.share-gauge { position: relative; width: 170px; height: 170px; flex: none; margin-left: 13px; margin-top: 24px; }
+.gauge-ring {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 1px solid rgba(120, 170, 235, .22);
+  box-shadow: inset 0 0 30px rgba(60, 120, 210, .25);
+}
+.gauge-core {
+  position: absolute; inset: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: radial-gradient(circle at 40% 32%, rgba(58, 104, 178, .75), rgba(12, 26, 52, .95) 72%);
+  box-shadow: 0 0 22px rgba(50, 110, 210, .45), inset 0 0 18px rgba(140, 190, 255, .22);
+}
+.share-chart { position: absolute; inset: -12px; }
+
+.share-legend { list-style: none; flex: 1; padding-left: 22px; margin-top: 36px; display: flex; flex-direction: column; gap: 8px; }
+.share-legend li { display: flex; align-items: center; gap: 6px; }
+.share-legend .sw {
+  width: 26px; height: 9px; border-radius: 5px; flex: none;
+  box-shadow: 0 0 10px currentColor;
+}
+/* 品类名最长 6 字（电子信息产品），一行放不下面板就叠到下一块了 */
+.share-legend .nm { width: 88px; flex: none; font-size: 14px; color: #cfe0f7; white-space: nowrap; }
+.share-legend .amt {
+  flex: 1; text-align: right; font-size: 13.5px; color: #d5e6ff; white-space: nowrap;
+  font-family: "DIN Alternate", "Bahnschrift", Arial, sans-serif;
+}
+.share-legend .pct {
+  width: 46px; text-align: right; font-size: 14.5px; font-weight: 700; color: #fff;
+  font-family: "DIN Alternate", "Bahnschrift", Arial, sans-serif;
+}
+
+/* 月度趋势 */
+.month-chart { width: 100%; height: 206px; margin-top: 4px; }
+
+/* 月度回放：一行时间轴，落在月度面板与品类表之间那条空隙里（约 34px），
+   不新增面板、不改任何 .sd-panel 的 top，所以整屏版式与设计稿的对齐关系没动。 */
+.month-scrub {
+  display: flex; align-items: center; gap: 3px; height: 26px; padding-left: 10px;
+}
+.month-scrub button {
+  flex: none; height: 24px; padding: 0 6px; border-radius: 3px; cursor: pointer;
+  font-family: inherit; font-size: 14px; font-weight: 600; letter-spacing: 1px;
+  color: #9fbfe6; background: rgba(18, 40, 80, .5); border: 1px solid rgba(110, 165, 235, .26);
+  transition: color .15s, border-color .15s, background .15s;
+}
+.month-scrub button:hover { color: #eaf4ff; border-color: rgba(150, 200, 255, .62); }
+.month-scrub .ms-mo.on {
+  color: #3a2400; border-color: #ffd76a; background: linear-gradient(180deg, #ffe3a0, #ffcf6e);
+  box-shadow: 0 0 12px rgba(255, 200, 90, .45);
+}
+.month-scrub .ms-play { color: #cfe4ff; padding: 0 9px; }
+.month-scrub .ms-play.run { color: #ffe3a0; border-color: rgba(255, 215, 106, .7); }
+.map-src .cur { color: #ffd76a; font-weight: 600; }
+/* 月模式下这行要多说一句口径：加宽到 840px 让它两行装完，别长到第三行压住指北针（指北针在 top:934，两行正好 49px） */
+.map-src.wide { width: 840px; }
+/* 回放某月时，两块品类面板标题上挂的月份角标 */
+.section-title .st-mo {
+  margin-left: 8px; padding: 1px 7px; border-radius: 3px;
+  font-size: 13px; font-weight: 600; letter-spacing: 1px; color: #3a2400;
+  background: linear-gradient(180deg, #ffe3a0, #ffcf6e);
+}
+
+/* 品类贸易值表格 */
+.sd-table { width: calc(100% - 27px); margin-top: 18px; margin-left: 18px; border-collapse: collapse; }
+.sd-table th {
+  height: 34px; font-size: 14px; font-weight: 600; color: #93b0d6; letter-spacing: 1px;
+  text-align: left; padding: 0 12px;
+  background: linear-gradient(90deg, rgba(38, 78, 148, .55), rgba(14, 30, 58, .3));
+  border-bottom: 1px solid rgba(110, 165, 235, .35);
+}
+.sd-table th:nth-child(3), .sd-table th:nth-child(4) { text-align: right; }
+.sd-table th:last-child, .sd-table td:last-child { padding-right: 2px; }
+.sd-table td {
+  height: 38px; font-size: 14.5px; color: #cfe0f7; padding: 0 12px;
+  border-bottom: 1px solid rgba(80, 130, 200, .12);
+}
+.sd-table td.i {
+  color: #8fa9cc; font-family: "DIN Alternate", "Bahnschrift", Arial, sans-serif;
+}
+.sd-table td.num {
+  text-align: right; font-family: "DIN Alternate", "Bahnschrift", Arial, sans-serif;
+  color: #eaf4ff;
+}
+.sd-table tbody tr:hover td { background: rgba(50, 100, 190, .14); }
+
+/* ---- 数据来源标注：地图数字全部是示例数据，必须在屏上写清楚 ---- */
+.map-src {
+  position: absolute; left: 52px; top: 884px; z-index: 8; width: 520px;
+  padding: 4px 9px; border-radius: 3px; background: rgba(6, 14, 28, .55);
+  font-size: 12px; line-height: 1.7; letter-spacing: .5px; color: rgba(159, 188, 224, .8);
+}
+.map-fatal {
+  position: absolute; left: 50%; top: 46%; z-index: 20; transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; gap: 6px; padding: 18px 26px;
+  background: rgba(48, 14, 18, .88); border: 1px solid rgba(255, 120, 120, .45);
+  border-radius: 6px; box-shadow: 0 0 40px rgba(0, 0, 0, .5);
+}
+.map-fatal b { font-size: 18px; color: #ffd7d7; letter-spacing: 1px; }
+.map-fatal span { font-size: 13px; color: #e8a9a9; }
+
+/* ---- 供应链图层（供应商 / 工厂 / 商品 / 产业带 / 物流 / 跨境卖家） ---- */
+.sd-layers { position: absolute; left: 52px; top: 552px; z-index: 9; width: 236px; }
+.layer-title { display: flex; align-items: center; gap: 8px; font-size: 16px; color: #d7e6fb; letter-spacing: 3px; margin-bottom: 10px; }
+.layer-title i { width: 11px; height: 11px; background: linear-gradient(135deg, #7db4ff, #2a63b8); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+.layer-btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.sd-layer {
+  height: 28px; font-size: 13.5px; letter-spacing: 1px; color: #8fa9cc;
+  background: linear-gradient(180deg, rgba(26, 50, 88, .62), rgba(10, 22, 44, .55));
+  border: 1px solid rgba(90, 140, 210, .18); border-radius: 3px;
+}
+.sd-layer.on {
+  color: #fff; text-shadow: 0 0 10px rgba(180, 220, 255, .9);
+  background: linear-gradient(180deg, rgba(52, 100, 182, .9), rgba(17, 40, 82, .88));
+  border-color: rgba(150, 200, 255, .6); box-shadow: 0 0 18px rgba(60, 130, 240, .3);
+}
+.layer-info { margin-top: 10px; font-size: 12px; line-height: 1.75; color: rgba(150, 180, 218, .82); }
+.layer-info b { color: #cfe4ff; font-weight: 600; font-family: "DIN Alternate", "Bahnschrift", Arial, sans-serif; }
+.layer-info .src { color: rgba(126, 156, 194, .7); }
+
+/* 图层标记：贴在地图市中心的点 + 短标签 */
+/* 标签整体挂在市中心左侧：右侧留给光柱的城市名，两者不再叠在同一行 */
+.layer-item { position: absolute; left: 0; top: 0; z-index: 6; display: flex; flex-direction: row-reverse;
+  align-items: center; gap: 6px; transform-origin: 100% 50%; pointer-events: none; white-space: nowrap; }
+.layer-item .ld { width: 9px; height: 9px; border-radius: 50%; background: #7ef0cf;
+  box-shadow: 0 0 12px rgba(126, 240, 207, .9), inset 0 0 0 1px rgba(255, 255, 255, .5); flex: none; }
+.layer-item .lt { font-size: 12.5px; color: #d9e9ff; text-shadow: 0 1px 6px rgba(0, 0, 0, .85); }
+.layer-item em { order: -1; }
+.layer-item em { font-style: normal; font-size: 11.5px; color: rgba(150, 180, 218, .78); }
+.layer-item.sel .lt { color: #ffd76a; }
+.layer-item.none .ld { background: rgba(120, 150, 190, .35); box-shadow: none; }
+.layer-item.none .lt { color: rgba(140, 168, 200, .5); }

@@ -1,0 +1,976 @@
+{
+ "meta": {
+  "src": "mock",
+  "unit": "万美元/年",
+  "source": "内置示例客户库（字段结构对齐真实 CRM / 海关数据服务商）",
+  "note": "域名为 RFC2606 保留的 .example 占位；「匹配原因」由查询条件实时计算，不预置在数据里",
+  "count": 38
+ },
+ "sizes": {
+  "小型": "员工少于 50 人",
+  "中型": "员工 50-250 人",
+  "大型": "员工 250 人以上"
+ },
+ "types": [
+  "品牌商",
+  "零售商",
+  "批发商",
+  "经销商",
+  "电商卖家",
+  "OEM-ODM采购商"
+ ],
+ "statuses": [
+  "未接触",
+  "已建联",
+  "已寄样",
+  "已报价",
+  "已成交",
+  "复购中"
+ ],
+ "items": [
+  {
+   "id": "C1001",
+   "name": "Northstar Footwear Co.",
+   "cn": "北星鞋业",
+   "iso": "USA",
+   "city": "Los Angeles",
+   "industry": "鞋类",
+   "products": [
+    "跑鞋",
+    "训练鞋",
+    "休闲鞋"
+   ],
+   "types": [
+    "品牌商",
+    "电商卖家"
+   ],
+   "size": "中型",
+   "employees": 120,
+   "annualPurchase": 860,
+   "website": "www.northstar-footwear.example",
+   "needs": "春秋两波段上新，单款首单 3000-6000 双",
+   "traits": "重视打样速度与专属开发，可用较高 MOQ 换低价",
+   "pains": "大牌压价导致毛利薄，小单快反能力不足",
+   "status": "已建联"
+  },
+  {
+   "id": "C1002",
+   "name": "Cascade Sports Group",
+   "cn": "卡斯卡德体育集团",
+   "iso": "USA",
+   "city": "Seattle",
+   "industry": "运动装备",
+   "products": [
+    "运动鞋",
+    "运动服",
+    "护具"
+   ],
+   "types": [
+    "品牌商",
+    "零售商"
+   ],
+   "size": "大型",
+   "employees": 1800,
+   "annualPurchase": 9400,
+   "website": "www.cascadegroup.example",
+   "needs": "全年滚动补单，需 EDI 对账",
+   "traits": "验厂(BSCI/Sedex)与合规文档要求齐全",
+   "pains": "断供即被罚款，UFLPA 审查严格",
+   "status": "已报价"
+  },
+  {
+   "id": "C1003",
+   "name": "Blue Harbor Trading",
+   "cn": "蓝港贸易",
+   "iso": "USA",
+   "city": "Chicago",
+   "industry": "综合批发",
+   "products": [
+    "鞋类",
+    "服装",
+    "家居用品"
+   ],
+   "types": [
+    "批发商",
+    "经销商"
+   ],
+   "size": "中型",
+   "employees": 85,
+   "annualPurchase": 1520,
+   "website": "www.blueharbor.example",
+   "needs": "多品类拼柜，单柜 3-5 个品类",
+   "traits": "要求混装发货与统一贴标",
+   "pains": "客户分散、单款量小，供应商配合度低",
+   "status": "未接触"
+  },
+  {
+   "id": "C1004",
+   "name": "Peak Trail Outfitters",
+   "cn": "巅峰户外",
+   "iso": "USA",
+   "city": "Denver",
+   "industry": "户外用品",
+   "products": [
+    "徒步鞋",
+    "越野跑鞋",
+    "户外服装"
+   ],
+   "types": [
+    "品牌商"
+   ],
+   "size": "小型",
+   "employees": 28,
+   "annualPurchase": 180,
+   "website": "www.peaktrail.example",
+   "needs": "小单多款，单款 800-1500 双",
+   "traits": "看重 GRS 再生材料与打样品质",
+   "pains": "常因起订量门槛被工厂拒绝",
+   "status": "已寄样"
+  },
+  {
+   "id": "C1005",
+   "name": "Urban Kicks Retail",
+   "cn": "都市潮鞋零售",
+   "iso": "USA",
+   "city": "Miami",
+   "industry": "鞋类零售",
+   "products": [
+    "潮流鞋",
+    "帆布鞋",
+    "滑板鞋"
+   ],
+   "types": [
+    "零售商",
+    "电商卖家"
+   ],
+   "size": "中型",
+   "employees": 210,
+   "annualPurchase": 2400,
+   "website": "www.urbankicks.example",
+   "needs": "追逐社媒爆款，上新周期 6-8 周",
+   "traits": "需要视觉素材与短视频配合",
+   "pains": "爆款断货与长尾积压同时发生",
+   "status": "已成交"
+  },
+  {
+   "id": "C1006",
+   "name": "Great Lakes Apparel",
+   "cn": "大湖区服饰",
+   "iso": "USA",
+   "city": "Detroit",
+   "industry": "服装",
+   "products": [
+    "运动服",
+    "卫衣",
+    "功能内衣"
+   ],
+   "types": [
+    "品牌商",
+    "OEM-ODM采购商"
+   ],
+   "size": "大型",
+   "employees": 950,
+   "annualPurchase": 7200,
+   "website": "www.greatlakesapparel.example",
+   "needs": "年度招标，需完整成本拆解",
+   "traits": "要求 BOM 透明与年度降价 3-5%",
+   "pains": "成本压力大，正把订单转向东南亚",
+   "status": "已建联"
+  },
+  {
+   "id": "C1007",
+   "name": "Sunrise Digital Imports",
+   "cn": "日出数字进口",
+   "iso": "USA",
+   "city": "Los Angeles",
+   "industry": "电商",
+   "products": [
+    "鞋类",
+    "运动配件",
+    "小家电"
+   ],
+   "types": [
+    "电商卖家",
+    "批发商"
+   ],
+   "size": "小型",
+   "employees": 42,
+   "annualPurchase": 520,
+   "website": "www.sunrisedig.example",
+   "needs": "首单小、返单快，需 FBA 直送",
+   "traits": "需要贴标、组合装与海外仓调拨",
+   "pains": "库存资金占用与平台回款周期长",
+   "status": "未接触"
+  },
+  {
+   "id": "C1008",
+   "name": "Atlantic Sporting Wholesale",
+   "cn": "大西洋体育批发",
+   "iso": "USA",
+   "city": "Newark",
+   "industry": "运动用品批发",
+   "products": [
+    "运动鞋",
+    "球类器材",
+    "健身器材"
+   ],
+   "types": [
+    "批发商",
+    "经销商"
+   ],
+   "size": "大型",
+   "employees": 620,
+   "annualPurchase": 11800,
+   "website": "www.atlanticsw.example",
+   "needs": "年框采购 200 万双以上",
+   "traits": "要求稳定产能保障与年度返点",
+   "pains": "交期波动即失去货架位置",
+   "status": "已报价"
+  },
+  {
+   "id": "C1009",
+   "name": "Rhine Sportmode GmbH",
+   "cn": "莱茵运动时尚",
+   "iso": "DEU",
+   "city": "Hamburg",
+   "industry": "服装",
+   "products": [
+    "运动休闲服",
+    "功能外套"
+   ],
+   "types": [
+    "品牌商",
+    "经销商"
+   ],
+   "size": "中型",
+   "employees": 160,
+   "annualPurchase": 1340,
+   "website": "www.rhine-sportmode.example",
+   "needs": "小批量多色，重视 OEKO-TEX 认证",
+   "traits": "需欧盟责任人与 GPSR 合规文档",
+   "pains": "能源与人工成本上升压缩采购预算",
+   "status": "已建联"
+  },
+  {
+   "id": "C1010",
+   "name": "Nordweg Schuhe AG",
+   "cn": "北途鞋业",
+   "iso": "DEU",
+   "city": "Munich",
+   "industry": "鞋类",
+   "products": [
+    "徒步鞋",
+    "工作鞋",
+    "休闲鞋"
+   ],
+   "types": [
+    "品牌商",
+    "批发商"
+   ],
+   "size": "大型",
+   "employees": 880,
+   "annualPurchase": 6800,
+   "website": "www.nordweg-schuhe.example",
+   "needs": "认证要求高(EN ISO 20347 等)",
+   "traits": "对六价铬等化学残留检测严格",
+   "pains": "本土产能成本高，寻求中国 ODM",
+   "status": "已寄样"
+  },
+  {
+   "id": "C1011",
+   "name": "Hansa Import Holding",
+   "cn": "汉萨进口控股",
+   "iso": "DEU",
+   "city": "Bremen",
+   "industry": "综合进口",
+   "products": [
+    "家居",
+    "鞋类",
+    "电子配件"
+   ],
+   "types": [
+    "进口商",
+    "批发商"
+   ],
+   "size": "中型",
+   "employees": 95,
+   "annualPurchase": 2100,
+   "website": "www.hansa-import.example",
+   "needs": "偏好一站式拼柜与统一单证",
+   "traits": "要求 DDP 报价与欧洲仓支持",
+   "pains": "海运周期长导致库存计划困难",
+   "status": "未接触"
+  },
+  {
+   "id": "C1012",
+   "name": "Sakura Walk Co.",
+   "cn": "樱花步行",
+   "iso": "JPN",
+   "city": "Tokyo",
+   "industry": "鞋类",
+   "products": [
+    "健步鞋",
+    "童鞋",
+    "休闲鞋"
+   ],
+   "types": [
+    "品牌商",
+    "零售商"
+   ],
+   "size": "中型",
+   "employees": 320,
+   "annualPurchase": 2600,
+   "website": "www.sakurawalk.example",
+   "needs": "品质与包装细节要求极高",
+   "traits": "需提供日文标签与批次检测报告",
+   "pains": "人口老龄化，需拓展轻运动品类",
+   "status": "已成交"
+  },
+  {
+   "id": "C1013",
+   "name": "Kansai Trading Co.",
+   "cn": "关东商事",
+   "iso": "JPN",
+   "city": "Osaka",
+   "industry": "综合贸易",
+   "products": [
+    "纺织",
+    "鞋类",
+    "食品"
+   ],
+   "types": [
+    "经销商",
+    "OEM-ODM采购商"
+   ],
+   "size": "大型",
+   "employees": 1400,
+   "annualPurchase": 15600,
+   "website": "www.kansai-trading.example",
+   "needs": "通过商社间接采购，重视长期关系",
+   "traits": "要求商社级文档与年度审厂",
+   "pains": "日元贬值持续压低采购单价",
+   "status": "已建联"
+  },
+  {
+   "id": "C1014",
+   "name": "Hokkaido Outdoor",
+   "cn": "北海道户外",
+   "iso": "JPN",
+   "city": "Sapporo",
+   "industry": "户外用品",
+   "products": [
+    "登山鞋",
+    "防寒服",
+    "露营装备"
+   ],
+   "types": [
+    "品牌商"
+   ],
+   "size": "小型",
+   "employees": 36,
+   "annualPurchase": 320,
+   "website": "www.hokkaido-outdoor.example",
+   "needs": "季节性强，冬款须在 6 月前定版",
+   "traits": "小批量高规格，重视工艺细节",
+   "pains": "常因单量小被供应商拒绝",
+   "status": "未接触"
+  },
+  {
+   "id": "C1015",
+   "name": "Seoul Step Brands",
+   "cn": "首尔步履",
+   "iso": "KOR",
+   "city": "Seoul",
+   "industry": "鞋类",
+   "products": [
+    "潮流鞋",
+    "运动休闲鞋",
+    "拖鞋"
+   ],
+   "types": [
+    "品牌商",
+    "电商卖家"
+   ],
+   "size": "中型",
+   "employees": 140,
+   "annualPurchase": 980,
+   "website": "www.seoulstep.example",
+   "needs": "上新快，单款 1000-3000 双",
+   "traits": "要求 15-20 天快反打样",
+   "pains": "本土设计强但产能不足",
+   "status": "已寄样"
+  },
+  {
+   "id": "C1016",
+   "name": "Busan Global Commerce",
+   "cn": "釜山环球商事",
+   "iso": "KOR",
+   "city": "Busan",
+   "industry": "综合贸易",
+   "products": [
+    "服装",
+    "鞋类",
+    "化妆品"
+   ],
+   "types": [
+    "经销商",
+    "批发商"
+   ],
+   "size": "中型",
+   "employees": 75,
+   "annualPurchase": 1260,
+   "website": "www.busan-gc.example",
+   "needs": "拼单采购，账期 30-45 天",
+   "traits": "需要 KC 认证与韩语标签代办",
+   "pains": "汇率波动影响下单节奏",
+   "status": "已报价"
+  },
+  {
+   "id": "C1017",
+   "name": "Mekong Footwear JSC",
+   "cn": "湄公鞋业",
+   "iso": "VNM",
+   "city": "Ho Chi Minh",
+   "industry": "鞋材与代工",
+   "products": [
+    "鞋底",
+    "鞋面材料",
+    "模具"
+   ],
+   "types": [
+    "OEM-ODM采购商"
+   ],
+   "size": "大型",
+   "employees": 2600,
+   "annualPurchase": 4200,
+   "website": "www.mekongfootwear.example",
+   "needs": "采购中国鞋底材、模具与辅料",
+   "traits": "要求稳定批次与越南清关支持",
+   "pains": "本地原材料高度依赖中国供应",
+   "status": "已建联"
+  },
+  {
+   "id": "C1018",
+   "name": "Jakarta Sports Retail",
+   "cn": "雅加达运动零售",
+   "iso": "IDN",
+   "city": "Jakarta",
+   "industry": "运动零售",
+   "products": [
+    "运动鞋",
+    "球衣",
+    "运动配件"
+   ],
+   "types": [
+    "零售商",
+    "电商卖家"
+   ],
+   "size": "中型",
+   "employees": 260,
+   "annualPurchase": 720,
+   "website": "www-jakasports.example",
+   "needs": "价格敏感，需清真合规文件",
+   "traits": "SNI 与 Halal 认证代办需求强",
+   "pains": "本币波动与进口配额限制",
+   "status": "未接触"
+  },
+  {
+   "id": "C1019",
+   "name": "Outback Motion Pty",
+   "cn": "内陆动力",
+   "iso": "AUS",
+   "city": "Sydney",
+   "industry": "运动用品",
+   "products": [
+    "跑鞋",
+    "户外鞋",
+    "运动服"
+   ],
+   "types": [
+    "品牌商",
+    "零售商"
+   ],
+   "size": "中型",
+   "employees": 110,
+   "annualPurchase": 860,
+   "website": "www.outbackmotion.example",
+   "needs": "重视可持续与再生材料",
+   "traits": "需产品责任险与强制安全标准合规",
+   "pains": "海运周期长，需本地备货",
+   "status": "已寄样"
+  },
+  {
+   "id": "C1020",
+   "name": "Melbourne Home Sport",
+   "cn": "墨尔本家居运动",
+   "iso": "AUS",
+   "city": "Melbourne",
+   "industry": "家居与运动",
+   "products": [
+    "家居用品",
+    "健身器材",
+    "鞋类"
+   ],
+   "types": [
+    "批发商",
+    "电商卖家"
+   ],
+   "size": "小型",
+   "employees": 45,
+   "annualPurchase": 410,
+   "website": "www.melhomesport.example",
+   "needs": "多品类小批量，重视性价比",
+   "traits": "要求拼柜与统一单证",
+   "pains": "库存资金压力大",
+   "status": "未接触"
+  },
+  {
+   "id": "C1021",
+   "name": "Pacific Rim Foods Ltd",
+   "cn": "环太平洋食品",
+   "iso": "AUS",
+   "city": "Brisbane",
+   "industry": "食品进口",
+   "products": [
+    "休闲食品",
+    "水产品",
+    "调味品"
+   ],
+   "types": [
+    "进口商",
+    "经销商"
+   ],
+   "size": "中型",
+   "employees": 140,
+   "annualPurchase": 980,
+   "website": "www.pacificrimfoods.example",
+   "needs": "冷链与检疫文件要求高",
+   "traits": "需生物安全(Biosecurity)合规支持",
+   "pains": "海运费与冷链成本高",
+   "status": "已报价"
+  },
+  {
+   "id": "C1022",
+   "name": "Maple Athletic Inc.",
+   "cn": "枫树运动",
+   "iso": "CAN",
+   "city": "Toronto",
+   "industry": "运动用品",
+   "products": [
+    "冰球装备",
+    "运动鞋",
+    "冬装"
+   ],
+   "types": [
+    "品牌商",
+    "经销商"
+   ],
+   "size": "中型",
+   "employees": 180,
+   "annualPurchase": 1120,
+   "website": "www.mapleathletic.example",
+   "needs": "冬季产品季节性集中",
+   "traits": "要求英法双语标签与美国转运",
+   "pains": "采购旺季与海运旺季重叠",
+   "status": "已建联"
+  },
+  {
+   "id": "C1023",
+   "name": "British Highstreet Ltd",
+   "cn": "英伦街",
+   "iso": "GBR",
+   "city": "Manchester",
+   "industry": "服装零售",
+   "products": [
+    "运动休闲服",
+    "鞋",
+    "配饰"
+   ],
+   "types": [
+    "零售商",
+    "电商卖家"
+   ],
+   "size": "大型",
+   "employees": 2400,
+   "annualPurchase": 8600,
+   "website": "www.britishhighstreet.example",
+   "needs": "年度两次订货会，重视准时交付",
+   "traits": "要求 GRS/BSCI 与碳足迹披露",
+   "pains": "门店去库存压力大、账期长",
+   "status": "已报价"
+  },
+  {
+   "id": "C1024",
+   "name": "Thames Import House",
+   "cn": "泰晤士进口屋",
+   "iso": "GBR",
+   "city": "London",
+   "industry": "综合进口",
+   "products": [
+    "家居",
+    "鞋类",
+    "小商品"
+   ],
+   "types": [
+    "进口商",
+    "批发商"
+   ],
+   "size": "小型",
+   "employees": 52,
+   "annualPurchase": 680,
+   "website": "www.thamesimport.example",
+   "needs": "小单快返，重视设计感",
+   "traits": "需要 UKCA 认证与英代服务",
+   "pains": "英镑波动与库存周转压力",
+   "status": "未接触"
+  },
+  {
+   "id": "C1025",
+   "name": "Amsterdam Bulk BV",
+   "cn": "阿姆斯特丹大宗",
+   "iso": "NLD",
+   "city": "Rotterdam",
+   "industry": "批发分销",
+   "products": [
+    "鞋类",
+    "服装",
+    "日用百货"
+   ],
+   "types": [
+    "批发商",
+    "经销商"
+   ],
+   "size": "大型",
+   "employees": 540,
+   "annualPurchase": 12400,
+   "website": "www.ambulk.example",
+   "needs": "整柜采购，DDP 欧洲仓",
+   "traits": "要求欧盟责任人与统一包装标识",
+   "pains": "能源与运费上升侵蚀利润",
+   "status": "已成交"
+  },
+  {
+   "id": "C1026",
+   "name": "Milano Calzature SpA",
+   "cn": "米兰鞋业",
+   "iso": "ITA",
+   "city": "Milan",
+   "industry": "鞋类",
+   "products": [
+    "皮鞋",
+    "设计款运动鞋"
+   ],
+   "types": [
+    "品牌商",
+    "OEM-ODM采购商"
+   ],
+   "size": "中型",
+   "employees": 230,
+   "annualPurchase": 1780,
+   "website": "www.milanocalzature.example",
+   "needs": "小批量高端，重视设计与工艺",
+   "traits": "要求意大利语沟通与本地打样配合",
+   "pains": "本土产能不足，寻找中国高端代工",
+   "status": "已寄样"
+  },
+  {
+   "id": "C1027",
+   "name": "Gulf Prime Trading LLC",
+   "cn": "海湾优选",
+   "iso": "ARE",
+   "city": "Dubai",
+   "industry": "批发零售",
+   "products": [
+    "鞋类",
+    "服装",
+    "家居"
+   ],
+   "types": [
+    "批发商",
+    "经销商"
+   ],
+   "size": "中型",
+   "employees": 130,
+   "annualPurchase": 2050,
+   "website": "www.gulfprime.example",
+   "needs": "斋月前集中备货，高温品类优先",
+   "traits": "要求自由区仓与阿语包装",
+   "pains": "转口至非洲的回款风险高",
+   "status": "未接触"
+  },
+  {
+   "id": "C1028",
+   "name": "Mexico Deportivo SA",
+   "cn": "墨西哥运动",
+   "iso": "MEX",
+   "city": "Monterrey",
+   "industry": "运动零售",
+   "products": [
+    "运动鞋",
+    "健身装备",
+    "球衣"
+   ],
+   "types": [
+    "零售商",
+    "批发商"
+   ],
+   "size": "中型",
+   "employees": 300,
+   "annualPurchase": 940,
+   "website": "www.mxdeportivo.example",
+   "needs": "价格与分期能力是关键",
+   "traits": "需 NOM 认证与西语资料",
+   "pains": "比索波动、清关周期长",
+   "status": "已建联"
+  },
+  {
+   "id": "C1029",
+   "name": "Sao Paulo Tenis Import",
+   "cn": "圣保罗鞋业进口",
+   "iso": "BRA",
+   "city": "Sao Paulo",
+   "industry": "鞋类",
+   "products": [
+    "休闲鞋",
+    "运动鞋",
+    "儿童鞋"
+   ],
+   "types": [
+    "进口商",
+    "经销商"
+   ],
+   "size": "大型",
+   "employees": 480,
+   "annualPurchase": 3600,
+   "website": "www.sptenis.example",
+   "needs": "为巴西连锁鞋店批量供货",
+   "traits": "需 INMETRO 认证与葡语资料",
+   "pains": "税负高、清关周期长",
+   "status": "已报价"
+  },
+  {
+   "id": "C1030",
+   "name": "Moscow Sport Line",
+   "cn": "莫斯科运动线",
+   "iso": "RUS",
+   "city": "Moscow",
+   "industry": "运动零售",
+   "products": [
+    "运动鞋",
+    "运动服",
+    "冬季装备"
+   ],
+   "types": [
+    "零售商",
+    "经销商"
+   ],
+   "size": "中型",
+   "employees": 280,
+   "annualPurchase": 1380,
+   "website": "www.moscowline.example",
+   "needs": "需补齐西方品牌退出后的品类",
+   "traits": "要求人民币结算与 EAC 认证",
+   "pains": "结算与物流通道稳定性",
+   "status": "已成交"
+  },
+  {
+   "id": "C1031",
+   "name": "Paris Maison Textile",
+   "cn": "巴黎家居纺织",
+   "iso": "FRA",
+   "city": "Paris",
+   "industry": "家纺",
+   "products": [
+    "床品",
+    "毛巾",
+    "窗帘"
+   ],
+   "types": [
+    "品牌商",
+    "进口商"
+   ],
+   "size": "中型",
+   "employees": 150,
+   "annualPurchase": 980,
+   "website": "www.parismaison.example",
+   "needs": "重视环保认证与花型设计",
+   "traits": "需法语标签与欧盟责任人",
+   "pains": "快时尚家纺价格战激烈",
+   "status": "已建联"
+  },
+  {
+   "id": "C1032",
+   "name": "Madrid Deporte SL",
+   "cn": "马德里运动",
+   "iso": "ESP",
+   "city": "Madrid",
+   "industry": "运动用品",
+   "products": [
+    "足球装备",
+    "训练鞋",
+    "运动服"
+   ],
+   "types": [
+    "批发商",
+    "零售商"
+   ],
+   "size": "中型",
+   "employees": 95,
+   "annualPurchase": 720,
+   "website": "www.madriddeporte.example",
+   "needs": "赛季节奏明显，重视现货",
+   "traits": "要求西语资料与欧洲短交期",
+   "pains": "库存资金占用高",
+   "status": "未接触"
+  },
+  {
+   "id": "C1033",
+   "name": "Berlin E-Bike Partners",
+   "cn": "柏林两轮",
+   "iso": "DEU",
+   "city": "Berlin",
+   "industry": "出行装备",
+   "products": [
+    "骑行服",
+    "车灯",
+    "电动自行车配件"
+   ],
+   "types": [
+    "品牌商",
+    "经销商"
+   ],
+   "size": "小型",
+   "employees": 58,
+   "annualPurchase": 540,
+   "website": "www.berlinbike.example",
+   "needs": "需欧洲售后与备件仓支持",
+   "traits": "重视认证(EN15194)与备件保障",
+   "pains": "城市出行限行政策变化",
+   "status": "未接触"
+  },
+  {
+   "id": "C1034",
+   "name": "Seoul Living Commerce",
+   "cn": "首尔生活电商",
+   "iso": "KOR",
+   "city": "Seoul",
+   "industry": "家居电商",
+   "products": [
+    "家居用品",
+    "收纳",
+    "小家电"
+   ],
+   "types": [
+    "电商卖家",
+    "批发商"
+   ],
+   "size": "中型",
+   "employees": 130,
+   "annualPurchase": 1450,
+   "website": "www.seoulliving.example",
+   "needs": "快速上新、包装设计重要",
+   "traits": "需要韩语素材与 7 日达",
+   "pains": "平台佣金持续提高",
+   "status": "已寄样"
+  },
+  {
+   "id": "C1035",
+   "name": "Chiba Foods Co.",
+   "cn": "千叶食品",
+   "iso": "JPN",
+   "city": "Chiba",
+   "industry": "食品进口",
+   "products": [
+    "冷冻食品",
+    "调味品",
+    "饮料"
+   ],
+   "types": [
+    "进口商",
+    "批发商"
+   ],
+   "size": "大型",
+   "employees": 760,
+   "annualPurchase": 5200,
+   "website": "www.chibafoods.example",
+   "needs": "批次检测与残次率要求严格",
+   "traits": "要求长期锁价与规格稳定",
+   "pains": "日本国内需求萎缩",
+   "status": "已成交"
+  },
+  {
+   "id": "C1036",
+   "name": "Toronto Foodway Import",
+   "cn": "多伦多吃味",
+   "iso": "CAN",
+   "city": "Vancouver",
+   "industry": "食品进口",
+   "products": [
+    "水产品",
+    "果蔬制品",
+    "休闲食品"
+   ],
+   "types": [
+    "进口商",
+    "经销商"
+   ],
+   "size": "中型",
+   "employees": 90,
+   "annualPurchase": 760,
+   "website": "www.foodway.example",
+   "needs": "冷链与检疫文件要求高",
+   "traits": "需 CFIA 注册与英文标签",
+   "pains": "海运费与冷链成本高",
+   "status": "已报价"
+  },
+  {
+   "id": "C1037",
+   "name": "Warszawa Home Sp. z o.o.",
+   "cn": "华沙家居",
+   "iso": "POL",
+   "city": "Warsaw",
+   "industry": "家居零售",
+   "products": [
+    "家居用品",
+    "小家电",
+    "家纺"
+   ],
+   "types": [
+    "零售商",
+    "经销商"
+   ],
+   "size": "中型",
+   "employees": 210,
+   "annualPurchase": 860,
+   "website": "www.warszahome.example",
+   "needs": "性价比优先，重视欧洲短交期",
+   "traits": "需欧盟合规文档与波兰语标签",
+   "pains": "乌克兰周边物流不确定性",
+   "status": "未接触"
+  },
+  {
+   "id": "C1038",
+   "name": "Ho Chi Minh HomeStyle",
+   "cn": "胡志明居家",
+   "iso": "VNM",
+   "city": "Ho Chi Minh",
+   "industry": "家居制造",
+   "products": [
+    "人造革",
+    "五金配件",
+    "包装材料"
+   ],
+   "types": [
+    "OEM-ODM采购商"
+   ],
+   "size": "中型",
+   "employees": 380,
+   "annualPurchase": 640,
+   "website": "www.homestyle-vn.example",
+   "needs": "采购中国辅料与五金件",
+   "traits": "要求越南海关文件与铁路班列",
+   "pains": "本地供应链不完整",
+   "status": "已建联"
+  }
+ ]
+}

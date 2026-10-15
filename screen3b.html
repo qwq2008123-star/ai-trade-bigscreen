@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 内容工厂 · AI 全球电商市场与获客平台</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='%230b1c34' stroke='%234d8dff' stroke-width='2'/%3E%3Cpath d='M3 16h26M16 3c6 5 6 21 0 26M16 3c-6 5-6 21 0 26' fill='none' stroke='%237ef0cf' stroke-width='2'/%3E%3C/svg%3E">
+<script src="js/entry.js?v=1"></script>
+<link rel="stylesheet" href="css/style.css?v=5">
+<link rel="stylesheet" href="css/ai.css?v=9">
+<link rel="stylesheet" href="css/screen3.css?v=15">
+<script src="js/data.js?v=4"></script>
+<script src="js/api.js?v=8"></script>
+<script src="js/dataset.js?v=8"></script>
+<script src="js/db.js?v=13"></script>
+<script src="js/ai.js?v=6"></script>
+<script src="js/shop.js?v=15"></script>
+<script src="js/shell.js?v=2"></script>
+</head>
+<body>
+<div id="viewport">
+  <div id="stage">
+    <div class="bg-grid"></div>
+
+    <!-- 横幅：一句话主张 + 四张能力卡（只做展示，切换走下方 Tab）+ 右侧 3D 插画（AI 生成装饰图，非商品实拍） -->
+    <section class="cf-hero">
+      <div class="cf-hero-art" role="img" aria-label="AI 生成装饰插画：笔记本、手机与发光网络，非商品实拍"></div>
+      <div class="cf-hero-txt">
+        <h2>AI 让你的产品<b>被更多人</b>看到</h2>
+        <p>从文案到视频，AI 帮你一键生成高质量营销内容</p>
+      </div>
+      <div class="cf-hero-state" id="cfState">读取本地商品库…</div>
+      <div class="cf-hero-meta"><span id="cfProvider">数据源</span><span id="cfClock">--</span></div>
+      <div class="cf-caps" id="cfCaps"></div>
+    </section>
+
+    <div class="cf-panel">
+      <nav class="cf-tabs" id="cfTabs"></nav>
+      <div class="cf-body">
+        <div class="cf-steps" id="cfSteps"></div>
+        <!-- 左：生成设置　中：产物　右：播放器 / 检查 / 平台状态；底部「最近生成」横跨中右两栏 -->
+        <aside class="cf-side" id="cfSide"></aside>
+        <main class="cf-mid" id="cfMid"></main>
+        <section class="cf-right" id="cfRight"></section>
+        <section class="cf-histrow" id="cfHistRow"></section>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="js/screen3.js?v=67"></script>
+</body>
+</html>

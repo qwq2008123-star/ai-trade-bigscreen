@@ -1,0 +1,83 @@
+{
+ "meta": {
+  "src": "mock",
+  "year": "2024",
+  "source": "内置示例数据（供应链图层）",
+  "note": "工厂/供应商/跨境卖家数量为示例分布，只用于演示图层切换与相对密度，不是统计口径；不写任何真实企业名称。物流节点名称是公开基础设施名。",
+  "unit": { "factories": "家", "suppliers": "家", "sellers": "个" },
+  "fields": "adcode 对齐 data/regions.json 与 data/fujian.json；产业带读 data/chains.json，商品品类读 data/regions.json，本文件只放供应链主体与物流节点"
+ },
+ "cities": {
+  "350100": {
+   "name": "福州市",
+   "factories": 380, "suppliers": 240, "sellers": 1900,
+   "logistics": [
+    { "kind": "海港", "name": "福州港江阴港区" },
+    { "kind": "机场", "name": "长乐国际机场" },
+    { "kind": "保税", "name": "福州综合保税区" }
+   ]
+  },
+  "350200": {
+   "name": "厦门市",
+   "factories": 260, "suppliers": 320, "sellers": 3400,
+   "logistics": [
+    { "kind": "海港", "name": "厦门港海沧港区" },
+    { "kind": "机场", "name": "高崎国际机场" },
+    { "kind": "跨境", "name": "跨境电商综试区 9610/1210 通道" }
+   ]
+  },
+  "350300": {
+   "name": "莆田市",
+   "factories": 520, "suppliers": 180, "sellers": 760,
+   "logistics": [
+    { "kind": "海港", "name": "莆田港秀屿港区" },
+    { "kind": "保税", "name": "莆田保税物流中心的拼柜点" }
+   ]
+  },
+  "350400": {
+   "name": "三明市",
+   "factories": 140, "suppliers": 60, "sellers": 180,
+   "logistics": [
+    { "kind": "陆地港", "name": "三明陆地港（铁海联运）" }
+   ]
+  },
+  "350500": {
+   "name": "泉州市",
+   "factories": 1180, "suppliers": 460, "sellers": 2100,
+   "logistics": [
+    { "kind": "海港", "name": "泉州港石湖港区" },
+    { "kind": "机场", "name": "泉州晋江国际机场" },
+    { "kind": "跨境", "name": "泉州跨境电商综试区" }
+   ]
+  },
+  "350600": {
+   "name": "漳州市",
+   "factories": 300, "suppliers": 150, "sellers": 620,
+   "logistics": [
+    { "kind": "海港", "name": "漳州港招银港区" },
+    { "kind": "冷链", "name": "漳州农产品出口冷链仓" }
+   ]
+  },
+  "350700": {
+   "name": "南平市",
+   "factories": 110, "suppliers": 55, "sellers": 160,
+   "logistics": [
+    { "kind": "内陆", "name": "南平内陆港（转口厦门）" }
+   ]
+  },
+  "350800": {
+   "name": "龙岩市",
+   "factories": 150, "suppliers": 70, "sellers": 240,
+   "logistics": [
+    { "kind": "陆地港", "name": "龙岩陆地港（铁海联运）" }
+   ]
+  },
+  "350900": {
+   "name": "宁德市",
+   "factories": 210, "suppliers": 90, "sellers": 300,
+   "logistics": [
+    { "kind": "海港", "name": "宁德港三都澳赛区" }
+   ]
+  }
+ }
+}

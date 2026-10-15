@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全球贸易经济分析大屏</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='%230b1c34' stroke='%234d8dff' stroke-width='2'/%3E%3Cpath d='M3 16h26M16 3c6 5 6 21 0 26M16 3c-6 5-6 21 0 26' fill='none' stroke='%237ef0cf' stroke-width='2'/%3E%3C/svg%3E">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body { background: #050b16; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; overflow: hidden; }
+
+#scroller {
+  height: 100vh; overflow-y: auto; overflow-x: hidden;
+  scroll-snap-type: y mandatory; scroll-behavior: smooth;
+  scrollbar-width: none;
+  margin-left: var(--menu-w);
+  width: calc(100vw - var(--menu-w));
+}
+#scroller::-webkit-scrollbar { display: none; }
+
+.screen { height: 100vh; scroll-snap-align: start; position: relative; }
+.screen iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+/* 左侧功能菜单：常驻可见，六个功能各自一项。
+   做成固定栏而不是浮层，屏内左缘有自己的数据栏，盖上去就等于功能被挡住了。 */
+:root { --menu-w: 176px; }
+#menu {
+  position: fixed; left: 0; top: 0; bottom: 0; width: var(--menu-w); z-index: 12;
+  display: flex; flex-direction: column;
+  background: linear-gradient(180deg, #07101f 0%, #050b16 100%);
+  border-right: 1px solid rgba(90, 140, 210, .22);
+  padding: 16px 0 12px;
+}
+#menu .brand { padding: 0 16px 14px; border-bottom: 1px solid rgba(90, 140, 210, .16); }
+#menu .brand b { display: block; font-size: 15px; letter-spacing: 2px; color: #dceaff; }
+#menu .brand span { display: block; margin-top: 4px; font-size: 11px; letter-spacing: 1px; color: rgba(140, 175, 220, .7); }
+#menu nav { flex: 1; overflow-y: auto; padding: 8px 0; scrollbar-width: none; }
+#menu nav::-webkit-scrollbar { display: none; }
+#menu h4 {
+  font-size: 10px; font-weight: 400; letter-spacing: 2px;
+  padding: 12px 16px 6px; color: rgba(120, 155, 200, .5);
+}
+#menu button {
+  position: relative; display: flex; align-items: center; gap: 10px; width: 100%;
+  background: none; border: 0; cursor: pointer; padding: 9px 16px;
+  font: inherit; text-align: left; color: rgba(158, 186, 222, .82);
+  transition: background .2s, color .2s;
+}
+#menu button i {
+  font-style: normal; font-size: 15px; width: 18px; flex: none; text-align: center;
+  color: rgba(126, 200, 255, .68); transition: .2s;
+}
+#menu button > span { flex: 1; min-width: 0; }
+#menu button em { display: block; font-style: normal; font-size: 13px; letter-spacing: 1px; white-space: nowrap; }
+#menu button s { display: block; text-decoration: none; font-size: 10px; margin-top: 2px; color: rgba(120, 152, 195, .6); }
+#menu button:hover { background: rgba(30, 60, 105, .35); color: #eaf3ff; }
+#menu button.on { background: linear-gradient(90deg, rgba(46, 96, 170, .5), rgba(20, 44, 82, .12)); color: #fff; }
+#menu button.on i { color: #7ec8ff; text-shadow: 0 0 12px rgba(90, 180, 255, .8); }
+#menu button.on::before {
+  content: ''; position: absolute; left: 0; top: 6px; bottom: 6px; width: 3px;
+  background: #6fc3ff; box-shadow: 0 0 12px #4aa8ff;
+}
+#menu .foot {
+  padding: 10px 16px 0; margin-top: 8px; border-top: 1px solid rgba(90, 140, 210, .16);
+  font-size: 10px; line-height: 1.6; color: rgba(120, 152, 195, .62);
+}
+#menu .foot b { display: block; font-size: 11px; font-weight: 400; letter-spacing: 1px; color: #9fd3ff; }
+
+/* 翻页：常驻可点，因为地球/地图区域内滚轮是缩放，不能指望滚轮翻页 */
+#pager {
+  position: fixed; left: calc(50% + var(--menu-w) / 2); bottom: 20px; transform: translateX(-50%);
+  z-index: 10; display: flex; align-items: stretch; gap: 8px;
+}
+#pager button {
+  display: flex; align-items: center; gap: 9px;
+  font: inherit; font-size: 12px; letter-spacing: 3px; cursor: pointer;
+  color: rgba(190, 218, 250, .82);
+  background: rgba(8, 18, 36, .78); border: 1px solid rgba(90, 140, 210, .3);
+  border-radius: 20px; padding: 8px 18px; transition: .25s;
+}
+#pager button:hover { color: #fff; border-color: rgba(120, 180, 255, .6); box-shadow: 0 0 18px rgba(60, 130, 230, .3); }
+#pager em { font-style: normal; }
+#pager b { font-weight: 400; font-size: 14px; animation: bob 1.6s ease-in-out infinite; }
+@keyframes bob { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(2px); } }
+</style>
+</head>
+<body>
+
+<div id="scroller">
+  <section class="screen"><iframe id="f0" title="全球贸易总览" allow="fullscreen"></iframe></section>
+  <section class="screen"><iframe id="f1" title="福建省贸易分析" allow="fullscreen"></iframe></section>
+  <section class="screen"><iframe id="f2" title="AI 内容工厂" allow="fullscreen"></iframe></section>
+  <section class="screen"><iframe id="f3" title="AI 商品与客服" allow="fullscreen"></iframe></section>
+  <section class="screen"><iframe id="f4" title="AI 经营分析与建议" allow="fullscreen"></iframe></section>
+</div>
+
+<aside id="menu">
+  <div class="brand"><b>AI 外贸增长台</b><span>数据 · 内容 · 店铺经营</span></div>
+  <nav id="funcs"></nav>
+  <div class="foot"><b id="modeTag">数据源 · 本地数据库 + 静态快照</b><span id="modeNote">每条结论都带指标与来源；商品与库存的写操作真的写进 data/app.db，电商平台尚未连接。</span></div>
+</aside>
+
+<div id="pager">
+  <button id="nextBtn" type="button"><em></em><b>⌄</b></button>
+</div>
+
+<script>
+const PAGES = ['screen1.html', 'screen2.html', 'screen3b.html', 'screen4a.html', 'screen4b.html'];
+const NAMES = ['全球贸易总览', '福建省贸易分析', 'AI 内容工厂', 'AI 商品与客服', 'AI 经营分析与建议'];
+/* 五个功能常驻在左栏：图标 + 名称 + 一句话说明 */
+const FUNCS = [
+  { g: '数据总览', ic: '◉', t: '全球贸易总览', d: '出口版图与品类' },
+  { g: '数据总览', ic: '▲', t: '福建贸易分析', d: '九个设区市与产业带' },
+  { g: 'AI 内容工厂', ic: '◈', t: '内容工厂', d: '文案 · 图片 · 分镜 · 发布' },
+  { g: 'AI 店铺经营', ic: '⬢', t: '商品与客服', d: '适配 · 优化 · 接待' },
+  { g: 'AI 店铺经营', ic: '◎', t: '分析与建议', d: '总览 · 洞察 · 计划' }
+];
+/* 屏内跨页跳转用视图名寻址，页面里不写死下标；下标只在这里出现一次 */
+const VIEWS = { '3b': 2, '4a': 3, '4b': 4 };
+const scroller = document.getElementById('scroller');
+/* 外壳的查询参数透传给每一屏：?live=1 让工作台走本地后端网关（Dify），密钥只留在服务端进程 */
+const Q = location.search;
+/* 每一屏的 HTML 文档自己也得带构建号：它们原先是裸地址，Chrome 把整份文档缓存下来，
+   里面写的 js/screen4.js?v=NN 就永远停在旧版本——用户报的「改了没生效」全是这一条。
+   改了任何 screen*.html 或它引用的 js/css，把这个数加一。 */
+const BUILD = 83;
+const frames = PAGES.map((src, i) => {
+  const f = document.getElementById('f' + i);
+  f.src = src + Q + (Q ? '&' : '?') + 'v=' + BUILD;
+  return f;
+});
+const funcs = document.getElementById('funcs');
+funcs.innerHTML = FUNCS.map((f, i) => {
+  const head = i === 0 || FUNCS[i - 1].g !== f.g ? `<h4>${f.g}</h4>` : '';
+  return head + `<button type="button" data-i="${i}" class="${i === 0 ? 'on' : ''}"><i>${f.ic}</i><span><em>${f.t}</em><s>${f.d}</s></span></button>`;
+}).join('');
+const items = [...funcs.querySelectorAll('button')];
+const nextBtn = document.getElementById('nextBtn');
+const nextLabel = nextBtn.querySelector('em');
+/* 外壳与 js/db.js 同一口径判定部署版（这里没引 db.js，所以正则重抄一份）。
+   发布到公网时那句「写进 data/app.db」不成立，得换成只读快照的实话。 */
+const HOSTED = !(/^(localhost|127\.|\[::1\]|0\.0\.0\.0$)/.test(location.hostname) || /^192\.168\./.test(location.hostname) || /^10\./.test(location.hostname) || /^172\.(1[6-9]|2\d|3[01])\./.test(location.hostname)) || Q.includes('snapshot=1');
+const modeTag = document.getElementById('modeTag');
+if (HOSTED) {
+  modeTag.textContent = '数据源 · 只读快照';
+  document.getElementById('modeNote').textContent = '这一版读的是发布时烘好的只读快照：五屏照常看，写操作与模型调用会当场说明「部署版没有后端」，不伪装成已保存；电商平台尚未连接。';
+} else if (Q.includes('live')) modeTag.textContent = '数据源 · Dify 实时';
+let cur = 0;
+/* 地址里的 #下标 就是当前屏：单屏页跳进来、收藏某一屏都靠它定位 */
+const at = () => { const i = parseInt(location.hash.slice(1), 10); return Number.isInteger(i) ? Math.max(0, Math.min(PAGES.length - 1, i)) : 0; };
+
+function go(i) {
+  i = Math.max(0, Math.min(PAGES.length - 1, i));
+  scroller.scrollTo({ top: i * innerHeight, behavior: 'smooth' });
+}
+function jump(i) {
+  /* #scroller 上是 CSS smooth，载入时得先按住它，否则会一屏一屏滑过去 */
+  scroller.style.scrollBehavior = 'auto';
+  scroller.scrollTop = i * innerHeight;
+  requestAnimationFrame(() => { scroller.style.scrollBehavior = ''; });
+}
+items.forEach(b => b.onclick = () => go(+b.dataset.i));
+nextBtn.onclick = () => go(cur === PAGES.length - 1 ? 0 : cur + 1);
+
+function navKey(key) {
+  if (key === 'ArrowDown' || key === 'PageDown') { go(cur + 1); return true; }
+  if (key === 'ArrowUp' || key === 'PageUp') { go(cur - 1); return true; }
+  return false;
+}
+addEventListener('keydown', e => { if (navKey(e.key)) e.preventDefault(); });
+
+// 同步当前屏：高亮左栏功能，并让非当前屏暂停渲染（多个 WebGL 场景同时跑开销很大）
+function sync() {
+  const i = Math.round(scroller.scrollTop / innerHeight);
+  if (i === cur) return;
+  cur = i;
+  if (location.hash !== '#' + i) history.replaceState(null, '', '#' + i);
+  items.forEach((b, k) => b.classList.toggle('on', k === i));
+  frames.forEach((f, k) => {
+    if (f.contentWindow) f.contentWindow.postMessage({ active: k === i }, '*');
+  });
+  const next = (i + 1) % PAGES.length;
+  nextLabel.textContent = '下一屏 · ' + NAMES[next];
+  nextBtn.querySelector('b').textContent = next < i ? '⌃' : '⌄';
+}
+scroller.addEventListener('scroll', () => requestAnimationFrame(sync), { passive: true });
+
+addEventListener('resize', () => go(cur));
+
+/* 屏 → 外壳的寻址消息转发。目标屏可能还没 boot 完，消息先攒着，等它上报 ready 再补发，
+   否则跨页「去优化」这类入口会点了没反应。 */
+const ready = [], pending = [];
+function tell(i, msg) {
+  if (i == null || !frames[i]) return;
+  if (ready[i]) { if (frames[i].contentWindow) frames[i].contentWindow.postMessage(msg, '*'); }
+  else pending[i] = msg;
+}
+function indexOfSource(src) {
+  for (let i = 0; i < frames.length; i++) if (frames[i].contentWindow === src) return i;
+  return null;
+}
+
+// 屏内滚轮：地球/地图自己吞掉的用于缩放，其余上报给外壳翻页
+let acc = 0, lastDelta = 0;
+addEventListener('message', e => {
+  const d = e.data;
+  if (!d) return;
+  if (typeof d.navKey === 'string') { navKey(d.navKey); return; }
+  if (d.ready) {
+    const i = indexOfSource(e.source);
+    if (i == null) return;
+    ready[i] = true;
+    if (pending[i]) { frames[i].contentWindow.postMessage(pending[i], '*'); pending[i] = null; }
+    return;
+  }
+  if (d.goto != null) {
+    const i = typeof d.goto === 'number' ? d.goto : VIEWS[d.goto];
+    if (i == null) return;
+    go(i);
+    if (d.open) tell(i, { open: d.open });
+    return;
+  }
+  if (typeof d.swipe !== 'number' || Math.abs(d.swipe) < 2) return;
+  if (d.swipe * lastDelta < 0) acc = 0;
+  lastDelta = d.swipe;
+  acc += d.swipe;
+  if (Math.abs(acc) < 320) return;
+  go(cur + Math.sign(acc));
+  acc = 0;
+});
+
+// 载入后把初始激活状态通知各屏
+frames.forEach((f, k) => f.addEventListener('load', () => {
+  f.contentWindow.postMessage({ active: k === cur }, '*');
+}));
+nextLabel.textContent = '下一屏 · ' + NAMES[1];
+
+addEventListener('hashchange', () => go(at()));
+/* 单屏页跳过来时地址里带着 #下标，落位要赶在各屏 boot 之前，省掉一段滑屏动画 */
+if (at()) jump(at());
+</script>
+</body>
+</html>

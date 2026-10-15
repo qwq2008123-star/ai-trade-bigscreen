@@ -1,0 +1,314 @@
+/* 第四屏：AI 店铺经营工作台。只复用第三屏 ai.css 的配色与卡片语言，新增店铺专用组件 */
+
+/* ---------- 左栏：店铺上下文 ---------- */
+.sp-shop { font-size: 15px; line-height: 1.6; color: #b9cfee; }
+.sp-shop .nm { font-size: 19px; color: #eaf4ff; letter-spacing: 1px; margin-bottom: 3px; }
+.sp-shop dl { margin: 6px 0 0; display: grid; grid-template-columns: 62px 1fr; gap: 2px 8px; font-size: 14px; }
+.sp-shop dt { color: #93b0d6; }
+.sp-shop dd { margin: 0; color: #d7e8fb; }
+.sp-plat { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
+.sp-plat i.on { color: #8ff0c0; background: rgba(30, 110, 75, .3); border-color: rgba(143, 240, 192, .35); }
+#spProvider.db-down, #spShopSrc.db-down { color: #ff9b8a; }
+.sp-plat i {
+  font-style: normal; font-size: 13px; padding: 2px 8px; border-radius: 9px;
+  color: #ffd76a; background: rgba(120, 95, 30, .28); border: 1px solid rgba(255, 215, 106, .32);
+}
+
+/* 电商平台接缝：常驻在商品页工具条下方，一眼看到「哪几家没连、缺什么」 */
+.sp-seam { border: 1px solid rgba(80, 130, 200, .22); background: rgba(14, 30, 56, .5); padding: 8px 11px; margin-bottom: 10px; }
+.sp-seam .hd { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.sp-seam .hd b { font-size: 17px; color: #eaf4ff; font-weight: 500; }
+.sp-seam code { font-family: Menlo, Consolas, monospace; font-size: 13px; color: #cfe9ff; }
+.sp-seam .ai-note { font-size: 14px; }
+
+/* ---------- KPI 与图表 ---------- */
+.sp-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.sp-kpi {
+  background: rgba(18, 38, 68, .5); border: 1px solid rgba(80, 130, 200, .22); border-radius: 3px;
+  padding: 10px 12px;
+}
+.sp-kpi span { display: block; font-size: 15px; color: #93b0d6; letter-spacing: 1px; }
+.sp-kpi b { display: block; font-size: 26px; color: #fff; font-weight: 600; margin: 5px 0 2px; line-height: 1.2; }
+.sp-kpi b em { font-style: normal; font-size: 14px; color: #93b0d6; margin-left: 3px; font-weight: 400; }
+.sp-kpi p { margin: 0; font-size: 14px; color: rgba(160, 195, 240, .7); }
+/* KPI 卡上的「逐笔」入口：明细入口直接摆在卡里，不做隐藏热区——整张卡可点容易被当成装饰。
+   0.77 倍缩放下 13px 只有约 10px，用户找不到，所以按整宽按钮做、字号提到 15px。 */
+.sp-kpi .kpi-drill {
+  display: block; width: 100%; margin-top: 9px; padding: 7px 8px; text-align: center;
+  font-size: 15px; line-height: 1.2; color: #d7ecff;
+  background: rgba(46, 118, 210, .2); border: 1px solid rgba(104, 176, 255, .55); border-radius: 3px;
+}
+.sp-kpi .kpi-drill:hover { background: rgba(56, 140, 245, .34); border-color: #7ab8ff; color: #fff; }
+.sp-d { font-style: normal; font-size: 14px; padding: 1px 6px; border-radius: 8px; margin-left: 6px; vertical-align: 3px; }
+.sp-d.up { color: #7ef0cf; background: rgba(40, 120, 90, .28); border: 1px solid rgba(90, 220, 180, .3); }
+.sp-d.dn { color: #ff9b8a; background: rgba(120, 45, 35, .28); border: 1px solid rgba(255, 155, 138, .32); }
+.sp-d.fl { color: #9fb6d8; background: rgba(60, 80, 110, .28); border: 1px solid rgba(150, 175, 210, .25); }
+
+.sp-charts { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 10px; }
+.sp-chart {
+  background: rgba(14, 30, 56, .55); border: 1px solid rgba(80, 130, 200, .22); border-radius: 3px;
+  padding: 8px 9px 4px;
+}
+.sp-chart h6 {
+  margin: 0; font-size: 15px; font-weight: 500; color: #cfe3ff; letter-spacing: 1px;
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+.sp-chart h6 span { flex: none; }
+.sp-chart h6 b { font-weight: 400; font-size: 14px; color: #8fd6ff; font-family: "DIN Alternate", Arial; white-space: nowrap; }
+.sp-cv { width: 100%; height: 132px; }
+
+/* ---------- AI 今日经营分析 ---------- */
+.sp-finds { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.sp-find {
+  border: 1px solid rgba(80, 130, 200, .22); background: rgba(14, 30, 56, .5);
+  border-left: 3px solid #4d8ddc; padding: 9px 12px;
+}
+.sp-find.warn { border-left-color: #ff9b8a; }
+.sp-find.ok { border-left-color: #7ef0cf; }
+.sp-find .hd { display: flex; align-items: baseline; gap: 8px; }
+.sp-find .hd b { font-size: 18px; color: #fff; font-weight: 600; letter-spacing: .5px; }
+.sp-find .hd u { text-decoration: none; font-size: 15px; margin-right: 2px; }
+.sp-find p { margin: 5px 0 0; font-size: 15px; line-height: 1.7; color: rgba(200, 222, 248, .86); }
+.sp-find .act { margin-top: 7px; display: flex; gap: 7px; }
+
+.sp-funnel { margin-top: 4px; }
+.sp-funnel .r { display: flex; align-items: center; gap: 10px; font-size: 15px; padding: 4px 0; }
+.sp-funnel .r i { font-style: normal; width: 88px; color: #93b0d6; flex: none; white-space: nowrap; }
+.sp-funnel .r .bar { flex: 1; height: 16px; background: rgba(30, 58, 100, .5); border-radius: 2px; overflow: hidden; }
+.sp-funnel .r .bar s {
+  display: block; height: 100%; text-decoration: none;
+  background: linear-gradient(90deg, rgba(77, 141, 255, .85), rgba(143, 214, 255, .75));
+}
+.sp-funnel .r b { width: 78px; text-align: right; color: #eaf4ff; font-weight: 500; flex: none; }
+.sp-funnel .r em { font-style: normal; width: 92px; text-align: right; color: #8fd6ff; flex: none; }
+
+/* ---------- AI 行动计划时间轴 ---------- */
+.sp-plan { list-style: none; margin: 0; padding: 0; }
+.sp-plan li {
+  display: flex; gap: 12px; align-items: flex-start; padding: 9px 10px;
+  border-bottom: 1px dashed rgba(80, 130, 200, .16);
+}
+.sp-plan li time {
+  flex: none; width: 58px; font-size: 17px; color: #ffd76a; font-family: "DIN Alternate", Arial;
+  letter-spacing: .5px; padding-top: 1px;
+}
+.sp-plan li .bd { flex: 1; min-width: 0; }
+.sp-plan li .bd b { display: block; font-size: 17px; color: #eaf4ff; font-weight: 500; line-height: 1.5; }
+.sp-plan li .bd p { margin: 4px 0 0; font-size: 15px; line-height: 1.65; color: rgba(180, 208, 240, .8); }
+.sp-plan li .tg { flex: none; align-self: center; }
+
+/* ---------- 商品管理 ---------- */
+.sp-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+.sp-tools .ai-in { width: 210px; }
+.sp-tools .ai-se { width: 150px; height: 32px; }
+.sp-tools label { font-size: 15px; color: #93b0d6; }
+table.ai-table td .sp-name { display: block; font-size: 15px; color: #fff; }
+table.ai-table td .sp-en { display: block; font-size: 13px; color: rgba(150, 180, 220, .7); margin-top: 2px; }
+table.ai-table td.num { text-align: right; font-family: "DIN Alternate", Arial; font-size: 16px; color: #eaf4ff; white-space: nowrap; }
+table.ai-table td .sp-warn { color: #ff9b8a; }
+table.ai-table td .sp-ok { color: #7ef0cf; }
+table.ai-table td.num.sp-warn { color: #ff9b8a; }
+table.ai-table td.num.sp-ok { color: #7ef0cf; }
+/* 主动跟进表：当前看草稿的那一行要点亮，否则看不出下面的话术属于谁 */
+table.ai-table tr.on td { background: rgba(64, 140, 235, .14); }
+.sp-warn { color: #ff9b8a; }
+.sp-ok { color: #7ef0cf; }
+.sp-spark { display: inline-block; width: 78px; height: 22px; vertical-align: -6px; }
+
+/* AI 诊断列：每个问题一个可点的按钮，点开就是「AI 整理店铺」里对应的那一组 */
+table.ai-table td.why { min-width: 168px; }
+table.ai-table td.ops { min-width: 150px; white-space: nowrap; }
+.sp-chip {
+  font: inherit; font-size: 13px; line-height: 20px; cursor: pointer; margin: 0 4px 3px 0; padding: 0 7px;
+  border-radius: 10px; color: #ffcf7a; background: rgba(120, 95, 30, .26); border: 1px solid rgba(255, 215, 106, .3);
+}
+.sp-chip:hover { color: #fff; background: rgba(150, 118, 34, .45); }
+.ai-btn.xs { font-size: 13px; padding: 2px 8px; margin: 0 4px 3px 0; }
+.ai-btn.xs.pri { color: #04101f; font-weight: 700; background: linear-gradient(90deg, #6fb8ff, #8fd6ff); border-color: transparent; }
+
+/* 「AI 整理店铺」：按规则分组，展开才列明细 */
+.sp-grps { display: grid; gap: 8px; margin-top: 4px; }
+.sp-grp { border: 1px solid rgba(80, 130, 200, .2); background: rgba(14, 30, 56, .5); padding: 8px 11px; }
+.sp-grp.on { border-color: rgba(255, 215, 106, .4); background: rgba(22, 44, 78, .62); }
+.sp-grp .hd { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.sp-grp .hd .nm { font-size: 17px; color: #eaf4ff; font-weight: 500; cursor: pointer; }
+.sp-grp .hd .nm:hover { color: #8fd6ff; }
+.sp-grp .hd s { text-decoration: none; font-size: 15px; color: #ffd76a; }
+.sp-grp .hd u { text-decoration: none; font-size: 14px; }
+.sp-grp .hd em { font-style: normal; margin-left: auto; font-size: 14px; color: rgba(150, 185, 230, .72); }
+.sp-grp > p { margin: 4px 0 0; font-size: 14px; line-height: 1.65; color: rgba(180, 208, 240, .78); }
+.sp-grp .its { margin-top: 7px; border-top: 1px dashed rgba(80, 130, 200, .2); }
+.sp-grp .it { padding: 7px 2px; border-bottom: 1px dashed rgba(80, 130, 200, .14); font-size: 15px; color: #d7e8fb; }
+.sp-grp .it > i { font-style: normal; color: #8fd6ff; font-family: "DIN Alternate", Arial; margin-right: 8px; }
+.sp-grp .it .dofix { margin-top: 4px; font-size: 14px; color: #7ef0cf; }
+.sp-grp .it .dofix.warn { color: #ffcf7a; }
+.sp-grp .it .dofix code { color: #eaf4ff; font-family: Menlo, Consolas, monospace; font-size: 13px; }
+
+/* 「AI 上架商品」表单与详情编辑行 */
+.sp-form { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 12px; }
+.sp-form label { display: block; font-size: 15px; color: #93b0d6; letter-spacing: 1px; }
+.sp-form .ai-ta { height: 66px; }
+.sp-form label > .ai-in, .sp-form label > .ai-se, .sp-form label > .ai-ta { margin-top: 4px; }
+.sp-inline { display: block; font-size: 14px; color: #93b0d6; margin-bottom: 6px; }
+.sp-inline .ai-in { margin-top: 3px; font-size: 15px; padding: 5px 8px; }
+table.ai-table td.ops .ai-btn.xs { margin-bottom: 0; }
+
+.sp-ai { border: 1px solid rgba(80, 130, 200, .26); background: rgba(11, 24, 46, .8); padding: 12px 14px; margin-top: 12px; }
+.sp-ai h4 { margin: 0 0 8px; font-size: 20px; color: #fff; font-weight: 600; }
+.sp-ai h4 em { font-style: normal; font-size: 15px; color: #8fd6ff; margin-left: 8px; }
+.sp-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.sp-cols .c { background: rgba(18, 38, 68, .42); border: 1px solid rgba(80, 130, 200, .2); padding: 9px 11px; }
+.sp-cols .c h5 { margin: 0 0 6px; font-size: 16px; color: #7db4ff; letter-spacing: 1px; font-weight: 500; }
+.sp-cols .c p, .sp-cols .c li { font-size: 15px; line-height: 1.7; color: #d7e8fb; margin: 0 0 4px; }
+.sp-cols .c ol, .sp-cols .c ul { margin: 0; padding-left: 16px; }
+.sp-cols .c i { font-style: normal; display: block; font-size: 14px; color: rgba(150, 185, 230, .72); }
+.sp-lang { display: flex; gap: 6px; margin: 6px 0 8px; align-items: center; flex-wrap: wrap; }
+
+/* ---------- 客服中心 ---------- */
+/* 整屏一条竖向 flex：标题 + 跟进卡（可折叠）占固定高度，会话区吃掉剩余，不再堆一张分布表 */
+.sp-svcwrap { display: flex; flex-direction: column; height: 100%; overflow-y: auto; margin-bottom: -20px; }
+.sp-svcwrap::-webkit-scrollbar { width: 7px; }
+.sp-svcwrap::-webkit-scrollbar-thumb { background: rgba(90, 140, 210, .4); }
+.sp-svcwrap > .ai-top { flex: none; }
+.sp-fu { flex: none; }
+.sp-fu .hd { display: flex; align-items: center; gap: 12px; }
+.sp-fu .hd h4 { margin: 0; }
+.sp-fu .hd .ai-btn { margin-left: auto; flex: none; }
+/* 33% 是量出来的：抬头 + 展开的跟进卡 + 会话区最小高度正好占满一屏，展开清单不会把聊天推出视野 */
+.sp-fu.open { max-height: 33%; overflow-y: auto; }
+.sp-fu.open .hd { margin-bottom: 8px; }
+/* flex-basis 一律给 0：会话区高度由剩余空间决定，不能被消息内容顶成一屏多高 */
+.sp-svc { display: flex; gap: 12px; align-items: stretch; flex: 1 1 0; min-height: 460px; margin-top: 12px; }
+.sp-clist { width: 292px; flex: none; min-height: 0; overflow-y: auto; border-right: 1px solid rgba(80, 130, 200, .2); padding-right: 8px; }
+.sp-clist::-webkit-scrollbar { width: 5px; }
+.sp-clist::-webkit-scrollbar-thumb { background: rgba(90, 140, 210, .38); }
+.sp-cust {
+  display: flex; gap: 9px; align-items: flex-start; padding: 8px 8px; cursor: pointer;
+  border-bottom: 1px dashed rgba(80, 130, 200, .14);
+}
+.sp-cust:hover { background: rgba(40, 78, 134, .3); }
+.sp-cust.on { background: rgba(52, 96, 160, .42); box-shadow: inset 2px 0 0 #ffd76a; }
+.sp-cust .av {
+  flex: none; width: 34px; height: 34px; line-height: 34px; text-align: center; border-radius: 50%;
+  font-size: 15px; color: #04101f; font-weight: 700; background: linear-gradient(135deg, #8fd6ff, #4d8dff);
+}
+.sp-cust .av img { width: 100%; height: 100%; border-radius: 50%; display: block; }
+.sp-cust .mt { flex: 1; min-width: 0; }
+.sp-cust .mt b { display: block; font-size: 16px; color: #eaf4ff; font-weight: 500; }
+.sp-cust .mt b u { text-decoration: none; font-size: 14px; color: #ffd76a; margin-left: 4px; }
+.sp-cust .mt i { font-style: normal; display: block; font-size: 14px; color: #93b0d6; margin-top: 2px; }
+.sp-cust .mt p {
+  margin: 3px 0 0; font-size: 14px; color: rgba(180, 208, 240, .72); line-height: 1.5;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.sp-cust .tm { flex: none; font-size: 13px; color: rgba(140, 175, 220, .6); text-align: right; }
+.sp-cust .tm s { text-decoration: none; display: inline-block; font-size: 12px; color: #04101f; background: #ffd76a; border-radius: 8px; padding: 0 5px; margin-top: 3px; }
+
+.sp-thread { flex: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; }
+/* 会话正文与输入区左右分栏：消息流独占整列高度，右边一栏放 AI 草稿与发送框 */
+.sp-chat { flex: 1 1 0; min-height: 0; display: flex; gap: 12px; }
+/* 会话列表吃掉整屏剩余高度；输入区（AI 草稿 + 按钮）优先保完整，实在放不下才自己滚 */
+/* position: relative 是给 scrollRowToTop 用的：这样 .sp-msg 的 offsetTop 就是「距框顶多少 CSS 像素」，
+   不必再拿缩放后的 rect 去除以 k（那条路一旦 k 算错，客户那句就正好被框顶切掉半截）。 */
+.sp-msgs { position: relative; flex: 1 1 0; min-width: 0; min-height: 180px; overflow-y: auto; padding-right: 6px; }
+.sp-msgs::-webkit-scrollbar { width: 6px; }
+.sp-msgs::-webkit-scrollbar-thumb { background: rgba(90, 140, 210, .4); }
+/* 客户最后一条钉在会话框外面：框内怎么滚都切不到它。
+   原来这一句只在 .sp-msgs 里，靠重绘结束时对齐到框顶——AI 那条回复比一屏还长，
+   往下读一眼就把客户那句顶出框外，看上去又成了「客户根本没回」。 */
+.sp-lastq {
+  flex: none; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px;
+  margin: 0 0 6px; padding: 5px 10px; font-size: 15px; line-height: 1.5;
+  background: rgba(16, 38, 68, .92); border: 1px solid rgba(143, 214, 255, .3);
+  border-left: 3px solid #8fd6ff;
+}
+.sp-lastq b { font-size: 14px; letter-spacing: 1px; color: #8fd6ff; font-weight: 600; }
+.sp-lastq span { flex: 1 1 300px; min-width: 0; color: #eaf4ff; white-space: pre-wrap; }
+.sp-lastq i { font-style: normal; font-size: 13px; color: #7f9dc4; }
+.sp-msg { margin-bottom: 12px; }
+.sp-msg .who { display: flex; align-items: baseline; font-size: 14px; color: #93b0d6; margin-bottom: 3px; }
+.sp-msg .who time { margin-left: auto; font-size: 13px; color: rgba(140, 175, 220, .6); }
+.sp-msg.ai .who { justify-content: flex-end; }
+.sp-msg.ai .who time { margin-left: 10px; }
+.sp-msg .bu {
+  display: inline-block; max-width: 88%; font-size: 16px; line-height: 1.7; color: #eaf4ff;
+  padding: 8px 11px; border-radius: 4px; white-space: pre-wrap;
+  background: rgba(30, 58, 100, .62); border: 1px solid rgba(90, 140, 210, .26);
+}
+.sp-msg.ai { text-align: right; }
+.sp-msg.ai .bu { background: rgba(24, 74, 60, .5); border-color: rgba(90, 220, 180, .3); color: #dbf5ea; }
+.sp-ana {
+  margin: 6px 0 0; padding: 8px 10px; background: rgba(6, 14, 28, .72);
+  border-left: 2px solid rgba(255, 215, 106, .55); font-size: 14px; line-height: 1.65; color: #c3d8f2;
+}
+.sp-ana .t { font-size: 14px; color: #ffd76a; letter-spacing: 1px; margin-bottom: 3px; }
+.sp-ana .kv { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.sp-ana .kv span i { font-style: normal; color: #93b0d6; }
+.sp-ana .kv b { color: #fff; font-weight: 500; }
+.sp-ana .sg { margin-top: 4px; color: #8fd6ff; }
+.sp-bar { display: inline-block; width: 62px; height: 6px; border-radius: 3px; background: rgba(30, 58, 100, .6); overflow: hidden; vertical-align: 1px; }
+.sp-bar s { display: block; height: 100%; text-decoration: none; background: linear-gradient(90deg, #4d8dff, #8fd6ff); }
+.sp-bar s.hot { background: linear-gradient(90deg, #ffb45a, #ff6b6b); }
+/* 右栏：AI 草稿 + 发送；顶部分栏后不再压住消息流，放不下时自己滚 */
+.sp-comp { flex: 0 1 44%; min-width: 340px; min-height: 0; overflow-y: auto; padding-left: 12px; border-left: 1px solid rgba(80, 130, 200, .22); }
+.sp-comp .ai-mail { max-height: 132px; }
+/* 人工发送条钉在会话列底部：分栏后它若留在右栏会被滚动条藏起来，老板反而找不到入口 */
+.sp-say { flex: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(80, 130, 200, .22); }
+.sp-comp .btns { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+/* 演示自动对话：整宽一条，按钮 + 状态说明都直接摆出来，口径证据点开才展开。
+   0.77 倍缩放下说明文字仍按 14px 走，和右侧其它注释同级。 */
+.sp-demo {
+  display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: -2px 0 9px; padding: 8px 9px;
+  background: rgba(24, 48, 86, .5); border: 1px dashed rgba(120, 180, 255, .42); border-radius: 3px;
+}
+.sp-demo .ai-note { flex: 1 1 100%; margin: 0; line-height: 1.5; }
+.sp-demo .ai-evbox { flex: 0 0 100%; }
+/* 演示行的气泡标记：这一条不是真人敲的，说明人一眼能看出来是哪几条 */
+.sp-dm-tag {
+  display: inline-block; margin-left: 6px; padding: 1px 7px; font-size: 14px; font-weight: 600;
+  color: #ffe9a8; background: rgba(150, 110, 20, .34); border: 1px solid rgba(255, 214, 106, .5);
+  border-radius: 8px; vertical-align: 2px;
+}
+
+/* ---------- 客户洞察 ---------- */
+.sp-in2 { display: flex; gap: 14px; align-items: flex-start; }
+.sp-in2 .L { width: 372px; flex: none; }
+.sp-in2 .R { flex: 1; min-width: 0; }
+.sp-evt { list-style: none; margin: 0; padding: 0; max-height: 420px; overflow-y: auto; }
+.sp-evt::-webkit-scrollbar { width: 5px; }
+.sp-evt::-webkit-scrollbar-thumb { background: rgba(90, 140, 210, .38); }
+.sp-evt li { display: flex; gap: 10px; font-size: 15px; padding: 6px 4px; border-bottom: 1px dashed rgba(80, 130, 200, .14); }
+.sp-evt li time { flex: none; width: 84px; color: rgba(140, 175, 220, .75); font-size: 14px; }
+.sp-evt li .a { flex: none; width: 108px; color: #7db4ff; }
+.sp-evt li .o { flex: 1; color: #c3d8f2; }
+.sp-evt li .o em { font-style: normal; color: #ffd76a; }
+.sp-score { margin: 0; display: grid; grid-template-columns: 96px 1fr; gap: 8px 10px; font-size: 15px; align-items: center; }
+.sp-score dt { color: #93b0d6; }
+.sp-score dd { margin: 0; color: #eaf4ff; }
+.sp-score dd b { font-size: 19px; font-family: "DIN Alternate", Arial; color: #fff; margin-right: 8px; }
+
+/* ---------- 市场适配 ---------- */
+.sp-fit .ai-cell b { font-size: 19px; }
+.sp-fit .ai-cell { min-height: 128px; }
+.sp-verdict {
+  margin-top: 12px; padding: 11px 13px; border: 1px solid rgba(255, 215, 106, .35);
+  background: rgba(90, 70, 20, .22); font-size: 16px; line-height: 1.75; color: #ffe9b8;
+}
+
+/* ---------- 通用 ---------- */
+.sp-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.sp-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.sp-mt { margin-top: 12px; }
+.sp-api { font-size: 14px; color: rgba(150, 185, 230, .75); line-height: 1.8; }
+.sp-api code { color: #8fd6ff; font-family: Menlo, Consolas, monospace; font-size: 13px; }
+
+/* ---------- live 标记：模型生成的行必须一眼和可回溯数据区分开 ---------- */
+.sp-model-tag {
+  display: inline-block; margin-right: 6px; padding: 0 5px; border-radius: 3px;
+  border: 1px solid rgba(126, 240, 207, .45); background: rgba(40, 90, 80, .3);
+  font-style: normal; font-size: 12px; line-height: 17px; color: #7ef0cf; vertical-align: 1px;
+}
+.sp-score dd .sp-vs {
+  display: block; margin-top: 2px; font-style: normal; font-size: 13px;
+  color: rgba(150, 185, 230, .72);
+}

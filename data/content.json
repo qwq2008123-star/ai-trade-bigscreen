@@ -1,0 +1,40 @@
+{
+  "meta": {
+    "src": "struct",
+    "source": "人工整理的各平台公开内容规范（2026-09 核对），未做平台侧实时校验",
+    "note": "字数与比例上限会随平台规则调整，落地前以商家后台最新规范为准"
+  },
+  "caps": [
+    { "id": "copy", "ic": "✎", "t": "AI 文案生成", "d": "多语言 · 多平台 · 高转化" },
+    { "id": "video", "ic": "▶", "t": "AI 视频生成", "d": "产品视频 · 口播视频 · 广告视频" },
+    { "id": "image", "ic": "▣", "t": "AI 图片生成", "d": "主图 · 海报 · 详情图" },
+    { "id": "publish", "ic": "⇪", "t": "多平台发布", "d": "TikTok · Instagram · Facebook · YouTube" }
+  ],
+  "channels": [
+    { "key": "tiktok", "name": "TikTok", "ratio": [9, 16], "titleMax": 150, "descMax": 2200, "tagMax": 5, "durations": [15, 30, 60], "tip": "前 3 秒必须出现产品与利益点，否则完播率直接掉" },
+    { "key": "instagram", "name": "Instagram", "ratio": [4, 5], "titleMax": 125, "descMax": 2200, "tagMax": 8, "durations": [15, 30, 60], "tip": "首图决定点击，标题超过 125 字符会被折叠" },
+    { "key": "youtube", "name": "YouTube", "ratio": [16, 9], "titleMax": 100, "descMax": 5000, "tagMax": 15, "durations": [30, 60], "tip": "标题 100 字符内，前 2 行描述要写清卖点" },
+    { "key": "facebook", "name": "Facebook", "ratio": [1, 1], "titleMax": 80, "descMax": 3000, "tagMax": 3, "durations": [15, 30, 60], "tip": "正文前两行以外会被折叠，链接放最后" }
+  ],
+  "langs": [
+    { "key": "zh", "t": "中文" }, { "key": "en", "t": "英语" }, { "key": "es", "t": "西语" },
+    { "key": "de", "t": "德语" }, { "key": "ja", "t": "日语" }
+  ],
+  "videoTypes": [
+    { "key": "show", "t": "产品展示", "segs": ["产品外观", "细节特写", "核心参数", "功能演示", "对比场景", "结尾 CTA"] },
+    { "key": "scene", "t": "使用场景", "segs": ["场景引入", "痛点镜头", "产品出场", "使用过程", "效果反馈", "结尾 CTA"] },
+    { "key": "unbox", "t": "开箱测评", "segs": ["包裹开箱", "配件清单", "上手第一感", "关键参数实测", "优缺点小结", "结尾 CTA"] },
+    { "key": "ad", "t": "广告推广", "segs": ["3 秒钩子", "卖点连击", "价格与活动", "信任背书", "限时提示", "结尾 CTA"] }
+  ],
+  "videoStyles": [
+    { "key": "tech", "t": "科技感", "bg": ["#071428", "#123258"], "fg": "#7fc4ff", "accent": "#7ef0cf" },
+    { "key": "life", "t": "生活化", "bg": ["#1a1408", "#3c2c12"], "fg": "#ffd9a0", "accent": "#ffc978" },
+    { "key": "mini", "t": "简约风", "bg": ["#0c1524", "#1b2a3f"], "fg": "#dceaff", "accent": "#8fd0ff" },
+    { "key": "anime", "t": "创意动画", "bg": ["#140b26", "#2c1650"], "fg": "#d9b8ff", "accent": "#8fd0ff" }
+  ],
+  "imageSizes": [
+    { "key": "sq", "t": "主图 1:1", "w": 1080, "h": 1080 },
+    { "key": "pt", "t": "详情海报 3:4", "w": 1080, "h": 1440 },
+    { "key": "hd", "t": "横幅 16:9", "w": 1280, "h": 720 }
+  ]
+}

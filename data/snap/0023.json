@@ -1,0 +1,1 @@
+{"data":{"on":false,"model":"wan2.7-t2v","note":"未配置 DASHSCOPE_API_KEY（写在 tools/video.env 里，浏览器读不到）","engine":"video"},"meta":{"src":"db","source":"tools/video.mjs 实时探测阿里云百炼"}}

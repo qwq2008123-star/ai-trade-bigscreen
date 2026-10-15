@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全球贸易经济分析大屏</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='%230b1c34' stroke='%234d8dff' stroke-width='2'/%3E%3Cpath d='M3 16h26M16 3c6 5 6 21 0 26M16 3c-6 5-6 21 0 26' fill='none' stroke='%237ef0cf' stroke-width='2'/%3E%3C/svg%3E">
+<script src="js/entry.js?v=1"></script>
+<link rel="stylesheet" href="css/style.css?v=6">
+<link rel="stylesheet" href="css/detail.css?v=5">
+<script src="vendor/echarts.min.js?v=1"></script>
+<script src="vendor/topojson-client.min.js?v=1"></script>
+<script src="vendor/three.min.js?v=1"></script>
+<script src="vendor/three-globe.min.js?v=1"></script>
+<script src="js/data.js?v=4"></script>
+<script src="js/api.js?v=8"></script>
+<script src="js/dataset.js?v=8"></script>
+<script src="js/detail.js?v=5"></script>
+</head>
+<body>
+<div id="viewport">
+  <div id="stage">
+    <!-- 背景 -->
+    <div class="bg-grid"></div>
+
+    <!-- 3D 地球 -->
+    <div id="globe-wrap">
+      <div id="globe-glow"></div>
+      <div id="globe"></div>
+      <div id="globe-bloom"></div>
+      <div id="globe-labels"></div>
+    </div>
+
+    <!-- 顶部标题栏 -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="main-title">全球贸易经济分析大屏</h1>
+        <span class="divider"></span>
+        <span class="sub-title">Global Trade and Economic Analysis Screen</span>
+      </div>
+      <div class="topbar-right">
+        <span class="datetime" id="clock">----.--.-- --:--:--</span>
+      </div>
+    </header>
+
+    <!-- 左侧国家列表 -->
+    <aside class="country-list" id="countryList"></aside>
+
+    <div class="globe-hint">拖拽旋转 · 滚轮缩放 · 点击球面或榜单切换国家</div>
+
+    <!-- 右侧数据面板 -->
+    <aside class="right-panel">
+      <!-- 进出口贸易概况 -->
+      <section class="panel">
+        <div class="section-title"><i></i>进出口贸易概况</div>
+        <span class="src-tag" id="srcTag"></span>
+        <div class="overview">
+          <div class="ov-left">
+            <div class="ov-label">进出口贸易总额</div>
+            <div class="ov-value"><b id="ovTotal">—</b><span>亿美元</span></div>
+            <div class="ov-label mt">同比增长</div>
+            <div class="ov-value growth"><b id="ovGrowth">—</b><span>%</span>
+              <svg id="ovArrow" viewBox="0 0 28 20" width="26" height="18"><polyline points="2,17 10,9 15,13 25,3" fill="none" stroke="#7db4ff" stroke-width="2"/><polygon points="25,3 19,4 24,9" fill="#7db4ff"/></svg>
+            </div>
+          </div>
+          <div class="ov-right">
+            <!-- 这里算的是「该国当年贸易总额 ÷ 中国当年贸易总额」，不是「占中国进出口的比重」；
+                 美国这种体量比值会超过 100%，标签写清楚才不会看着像 bug。 -->
+            <div class="ov-label">该国贸易额 ÷ 中国贸易额</div>
+            <ul class="year-bars" id="yearBars"></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab + 柱状图 -->
+      <section class="panel">
+        <div class="tabs" id="tabs">
+          <button class="tab active" data-key="all">全部数据</button>
+          <button class="tab" data-key="import">进口数据</button>
+          <button class="tab" data-key="export">出口数据</button>
+        </div>
+        <div class="chart-title"><i></i>各国进出口贸易总额（亿美元）</div>
+        <div id="barChart" class="bar-chart"></div>
+      </section>
+
+      <!-- 各国贸易额 -->
+      <section class="panel">
+        <div class="chart-title"><i></i>各国贸易额</div>
+        <div class="country-trade">
+          <div id="worldMap" class="world-map"></div>
+          <div class="trade-info">
+            <div class="trade-country"><span class="globe-ico">⊕</span><b id="tcName">—</b><em id="tcYear"></em></div>
+            <div class="trade-row">进口贸易总额：<b id="tcImport">—</b><span>亿美元</span></div>
+            <div class="trade-row">出口贸易总额：<b id="tcExport">—</b><span>亿美元</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 全球经贸新闻：条目由 js/main.js 从 data/news.json 渲染，不再写死在 HTML 里 -->
+      <section class="panel">
+        <div class="chart-title"><i></i>全球经贸新闻<em class="ct-note" id="newsSrc"></em></div>
+        <ul class="news-list" id="newsList">
+          <li class="news-item dim"><span class="news-text">资讯加载中…</span></li>
+        </ul>
+      </section>
+    </aside>
+  </div>
+</div>
+
+<script src="js/main.js?v=9"></script>
+</body>
+</html>
